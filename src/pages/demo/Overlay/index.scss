@@ -1,0 +1,35 @@
+$border-color: #e7eaf1;
+.tex-modal-overlay {
+  position: fixed;
+  box-sizing: border-box;
+  border: 1px solid $border-color;
+  border-radius: 3px;
+  padding: 10px;
+  background-color: #fff;
+  width: 330px;
+  min-height: 30px;
+  .tex-modal-arrow-down, .tex-modal-arrow-down:after {
+    border: 8px solid transparent;
+    display: block;
+    width: 0;
+    height: 0;      
+  }
+  .tex-modal-arrow-down {
+    left: 100px;
+    top: 107px;
+
+    position: absolute;
+    border-bottom-width: 0;
+    -webkit-transform: translate3d(-50%,-100%,0);
+    transform: translate3d(-50%,-100%,0);
+    border-top-color: $border-color;
+    &:after {
+      position: absolute;
+      left: -8px;
+      top: -9px;
+      content: "";
+      border-top-color: #fff;
+    }
+  }
+  
+}

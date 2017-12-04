@@ -1,0 +1,62 @@
+@import '../common';
+
+.latex-dlg {
+  &-close-icon {
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    outline: none;
+    position: absolute;
+    right: 0;
+    top: 5px;
+
+    .svg-icon svg {
+      height: 12px;
+      width: 12px;
+    }
+
+  }
+
+  &-main {
+    min-height: 300px;
+    min-width: 500px;
+    padding: 5px 10px;
+
+    &-editor {
+      border: 1px solid $color-gray;
+
+      textarea {
+        border: 0;
+        min-height: 100px;
+        outline: none;
+        padding: 3px 8px;
+        resize: none;
+        width: 100%;
+      }
+
+    }
+
+    &-preview {
+      align-items: center;
+      border: 2px dashed $color-gray;
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      min-height: 106px;
+      overflow-x: auto;
+    }
+  }
+
+  &-foot {
+    margin: 20px 0 0 10px;
+    text-align: center;
+
+    .ui-btn {
+      margin-right: 20px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
