@@ -32,6 +32,7 @@ class TexModal extends Component {
     const { latex = '' } = props;
     this.state = {
       tex: latex,
+      texInsert: '',
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -42,7 +43,7 @@ class TexModal extends Component {
     }
   }
   onSelectTex = (item) => {
-    this.setState({ tex: item.latex });
+    this.setState({ texInsert: item.latex });
   }
   onTexChange = (val) => {
     this.setState({ tex: val });
@@ -66,7 +67,7 @@ class TexModal extends Component {
         <div className="latex-dlg-main">
           <div className="latex-dlg-main-editor">
             <TexMenuItems onSelect={this.onSelectTex} />
-            <TexEditor defaultValue={this.state.tex} insertValue={this.state.tex} onChange={this.onTexChange} />
+            <TexEditor defaultValue={this.state.tex} insertValue={this.state.texInsert} onChange={this.onTexChange} />
           </div>
           <div className="latex-dlg-main-preview"><img alt={this.state.tex} src={imgTexSrc(this.state.tex)} /></div>
           <div className="latex-dlg-foot">
