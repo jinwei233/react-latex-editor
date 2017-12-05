@@ -28,6 +28,10 @@ class Overlay extends Component {
   }
   componentDidMount() {
     this.updateStyle(this.props);
+    window.addEventListener('resize', this.updatePosition, false);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updatePosition);
   }
   componentWillReceiveProps(nextProps) {
     this.flag = true;
@@ -51,6 +55,9 @@ class Overlay extends Component {
       overlayStyle: { ...overlayStyle, visibility },
       arrowStyle,
     });
+  }
+  updatePosition = (e) => {
+    this.updateStyle(this.props);
   }
   onClick = (e) => {
     e.nativeEvent.stopImmediatePropagation();

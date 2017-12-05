@@ -11,6 +11,13 @@ class TexEditor extends Component {
     this.value = props.value;
     this.isFocus = false;
   }
+  componentDidMount() {
+    // 设置编辑器高度
+    const editor = this.editor.codeMirror;
+    if (editor) {
+      editor.setSize(false, 120);
+    }
+  }
   shouldComponentUpdate(nextProps) {
     if (!this.isFocus) {
       const editor = this.editor.codeMirror;
