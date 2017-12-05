@@ -47,6 +47,8 @@ class Editor extends Component {
   componentDidMount() {
     const editor = this.quillRef.getEditor();
     if (editor) {
+      // 禁用拼写检查
+      editor.root.spellcheck = false;
       const toolbar = editor.getModule('toolbar');
       toolbar.addHandler('latex', () => {
         this.toggleTexModalOpen();
