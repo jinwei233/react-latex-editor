@@ -14,16 +14,18 @@ class TexEditor extends Component {
   shouldComponentUpdate(nextProps) {
     if (!this.isFocus) {
       const editor = this.editor.codeMirror;
-      editor.focus();
-      const doc = editor.getDoc();
-      const cursor = doc.getCursor();
-      const pos = {
-        line: cursor.line,
-        ch: cursor.ch,
-      };
-      setTimeout(() => {
-        doc.replaceRange(nextProps.insertValue, pos);
-      }, 0);
+      if (editor) {
+        editor.focus();
+        const doc = editor.getDoc();
+        const cursor = doc.getCursor();
+        const pos = {
+          line: cursor.line,
+          ch: cursor.ch,
+        };
+        setTimeout(() => {
+          doc.replaceRange(nextProps.insertValue, pos);
+        }, 0);
+      }
     }
     return false;
   }
