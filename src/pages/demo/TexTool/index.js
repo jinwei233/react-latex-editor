@@ -1,6 +1,7 @@
 import { Quill } from 'react-quill';
+import hotkeys from 'hotkeys-js';
 
-import { isLatexSrc } from '../util';
+import { imgTexSrc, isLatexSrc, text2tex } from '../util';
 
 import './index.scss';
 
@@ -8,22 +9,31 @@ const Module = Quill.import('core/module');
 const Embed = Quill.import('blots/embed');
 
 class LatexBot extends Embed {
-  static create(value) {
-    const node = super.create(value);
-    if (typeof value === 'string') {
-      const src = `https://latex.codecogs.com/gif.latex?${encodeURIComponent(value)}`;
-      node.setAttribute('src', src);
-    }
-    return node;
-  }
-  static value(domNode) {
-    return domNode.getAttribute('alt');
-  }
 }
 
 LatexBot.blotName = 'latex';
 LatexBot.className = 'ql-latex'; //
 LatexBot.tagName = 'IMG';
+
+function setEditorSelection(editor, range) {
+  if (range) {
+    const length = editor.getLength();
+    range.index = Math.max(0, Math.min(range.index, length - 1));
+    range.length = Math.max(0, Math.min(range.length, (length - 1) - range.index));
+  }
+  editor.setSelection(range);
+}
+
+function setEditorContents(editor, value, sel = false) {
+  if (typeof value === 'string') {
+    editor.clipboard.dangerouslyPasteHTML(value);
+  } else {
+    editor.setContents(value);
+  }
+  if (sel) {
+    setEditorSelection(editor, sel);
+  }
+}
 
 class TexTool extends Module {
   static register() {
@@ -31,6 +41,7 @@ class TexTool extends Module {
   }
   constructor(quil, options) {
     super(quil, options);
+
     quil.root.addEventListener('dblclick', (e) => {
       const { target } = e;
       const isImage = target.tagName.toUpperCase() === 'IMG';
@@ -43,6 +54,21 @@ class TexTool extends Module {
           }
         }
       }
+    });
+    // 批量转换
+    hotkeys('ctrl+shift+4', () => {
+      const sel = quil.getSelection();
+      const content = quil.root.innerHTML;
+      const ast = text2tex(content);
+      const HTML = ast.map((item) => {
+        if (item.type === 'text') {
+          return item.data;
+        } else if (item.type === 'math') {
+          const src = imgTexSrc(item.data);
+          return `<img src="${src}" alt="${item.data}" />`;
+        }
+      }).join('');
+      setEditorContents(quil, HTML, sel);
     });
   }
 }

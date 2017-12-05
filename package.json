@@ -18,6 +18,7 @@
   "homepage": "",
   "dependencies": {
     "classnames": "^2.2.5",
+    "hotkeys-js": "^2.0.4",
     "preact": "^8.2.1",
     "preact-compat": "^3.17.0",
     "react": "15.6.1",

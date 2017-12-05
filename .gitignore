@@ -38,3 +38,5 @@ dev
 *.tern-port
 *.tern-project
 *.vscode
+*.dir-locals.el
+package-lock.json
