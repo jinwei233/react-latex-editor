@@ -6,6 +6,7 @@ import Button from 'components/Button';
 
 import TexMenuItems from './TexMenuItems';
 import { imgTexSrc } from '../util';
+import TexEditor from './TexEditor';
 
 import './index.scss';
 
@@ -43,8 +44,8 @@ class TexModal extends Component {
   onSelectTex = (item) => {
     this.setState({ tex: item.latex });
   }
-  onTexChange = (e) => {
-    this.setState({ tex: e.currentTarget.value });
+  onTexChange = (val) => {
+    this.setState({ tex: val });
   }
   onCancel = (e) => {
     this.props.onClose(e);
@@ -65,7 +66,7 @@ class TexModal extends Component {
         <div className="latex-dlg-main">
           <div className="latex-dlg-main-editor">
             <TexMenuItems onSelect={this.onSelectTex} />
-            <textarea value={this.state.tex} onChange={this.onTexChange} spellCheck="false" />
+            <TexEditor defaultValue={this.state.tex} insertValue={this.state.tex} onChange={this.onTexChange} />
           </div>
           <div className="latex-dlg-main-preview"><img alt={this.state.tex} src={imgTexSrc(this.state.tex)} /></div>
           <div className="latex-dlg-foot">
