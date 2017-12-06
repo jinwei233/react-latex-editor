@@ -19,7 +19,7 @@ class Editor extends Component {
     super(props);
     this.state = {
       texModalOpen: false,
-      latexSelected: '',
+      latexSelected: props.latexSelected || '',
       text: '',
     };
     const toolbar = {
@@ -55,12 +55,21 @@ class Editor extends Component {
       });
     }
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.latexSelected !== this.state.latexSelected) {
+      this.setState({
+        texModalOpen: true,
+        latexSelected: nextProps.latexSelected,
+      });
+    }
+  }
   refEditor = (el) => {
     this.quillRef = el;
   }
   toggleTexModalOpen = () => {
     this.setState({
       texModalOpen: !this.state.texModalOpen,
+      latexSelected: !this.state.texModalOpen === false ? '' : this.state.latexSelected,
     });
   }
   imageHandler = () => {

@@ -7,19 +7,24 @@ import Table from './Table';
 import './index.scss';
 
 class Demo extends Component {
-  componentDidMount() {
-    console.log('mounted');
+  constructor(props) {
+    super(props);
+    this.state = {
+      latexSelected: '',
+    };
   }
   onClickItem = (e) => {
     const img = e.currentTarget;
     const latex = img.getAttribute('alt');
-    console.log(latex);
+    this.setState({
+      latexSelected: latex,
+    });
   }
   render() {
     return (
       <div className="editor-cont">
         <h1 className="editor-demo-title">带公式编辑能力的富文本编辑器</h1>
-        <Editor />
+        <Editor latexSelected={this.state.latexSelected} />
         <Table onClickItem={this.onClickItem} />
       </div>
     );
