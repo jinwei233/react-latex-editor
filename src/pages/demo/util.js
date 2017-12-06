@@ -119,10 +119,18 @@ function isLatexSrc(src) {
   return src.indexOf(LATEX_BASE_URI) === 0;
 }
 
+let _uuid = 1;
+const uuid = {
+  next() {
+    return _uuid++;
+  },
+};
+
 export {
   splitAtDelimiters,
   LATEX_BASE_URI,
   text2tex,
   imgTexSrc,
   isLatexSrc,
+  uuid,
 };

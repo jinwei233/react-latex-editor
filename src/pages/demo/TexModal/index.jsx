@@ -49,6 +49,7 @@ class TexModal extends Component {
     this.setState({ tex: val });
   }
   onCancel = (e) => {
+    this.setState({ texInsert: '' });
     this.props.onClose(e);
   }
   onConfirm = () => {
