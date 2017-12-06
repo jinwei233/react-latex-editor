@@ -39,16 +39,19 @@ class TexTool extends Module {
   static register() {
     Quill.register(LatexBot, true);
   }
-  constructor(quil, options) {
-    super(quil, options);
+  constructor(quill, options) {
+    super(quill, options);
 
-    quil.root.addEventListener('dblclick', (e) => {
+    quill.root.addEventListener('dblclick', (e) => {
       const { target } = e;
       const isImage = target.tagName.toUpperCase() === 'IMG';
       if (isImage) {
         const src = target.getAttribute('src');
         if (isLatexSrc(src)) {
           const latex = target.getAttribute('alt');
+          const blot = Quill.find(target);
+          const index = quill.getIndex(blot);
+          quill.setSelection(index, 0);
           if (latex) {
             options.onClickLatexImage(latex);
           }
@@ -57,8 +60,8 @@ class TexTool extends Module {
     });
     // 批量转换
     hotkeys('ctrl+shift+4', () => {
-      const sel = quil.getSelection();
-      const content = quil.root.innerHTML;
+      const sel = quill.getSelection();
+      const content = quill.root.innerHTML;
       const ast = text2tex(content);
       const HTML = ast.map((item) => {
         if (item.type === 'text') {
@@ -68,7 +71,7 @@ class TexTool extends Module {
           return `<img src="${src}" alt="${item.data}" />`;
         }
       }).join('');
-      setEditorContents(quil, HTML, sel);
+      setEditorContents(quill, HTML, sel);
     });
   }
 }

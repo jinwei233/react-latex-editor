@@ -19,6 +19,7 @@ class Editor extends Component {
     super(props);
     this.state = {
       texModalOpen: false,
+      latexSelectedFromContent: false,
       latexSelected: props.latexSelected || '',
       text: '',
     };
@@ -37,6 +38,7 @@ class Editor extends Component {
         onClickLatexImage: (latex) => {
           this.setState({
             texModalOpen: true,
+            latexSelectedFromContent: true,
             latexSelected: latex,
           });
         },
@@ -70,6 +72,7 @@ class Editor extends Component {
     this.setState({
       texModalOpen: !this.state.texModalOpen,
       latexSelected: !this.state.texModalOpen === false ? '' : this.state.latexSelected,
+      latexSelectedFromContent: false,
     });
   }
   imageHandler = () => {
@@ -97,14 +100,20 @@ class Editor extends Component {
       const selection = editor.getSelection();
       const src = imgTexSrc(latex);
       // editor.insertEmbed(selection.index, 'image', src, { alt: latex, 'is-latex': '1' });
-      const delta = new Delta().retain(selection.index)
-                               .insert({
-                                 image: src,
-                               }, {
-                                 alt: latex,
-                               });
+      const delta = new Delta();
+      if (this.state.latexSelectedFromContent) {
+        delta.retain(selection.index);
+        delta.delete(1);
+      } else {
+        delta.retain(selection.index);
+      }
+      delta.insert({
+        image: src,
+      }, {
+        alt: latex,
+      });
       editor.updateContents(delta);
-      editor.setSelection(selection.index + 1, 1, 'user');
+      editor.setSelection(selection.index + 1, 0, 'user');
       this.toggleTexModalOpen();
     }
   }
