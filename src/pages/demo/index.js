@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 import Editor from './Editor';
 import Table from './Table';
 import { uuid } from './util';
+import editorValue from './initEditorValue';
 
 import './index.scss';
-
 
 const demos = [{
   title: '数学示例',
@@ -207,7 +207,7 @@ p_{m1} & p_{m2} & \\ldots
     key: uuid.next(),
     items: [
       '\\ce{CO2 + C ->[\\text{above}][\\text{below}] 2CO}',
-      '\\ce{CO2 + C ->T[above][below] 2CO}',
+      '\\ce{CO2 + C ->T[above very long][below] 2CO}',
       '\\ce{$A$ ->[\\ce{+H2O}] $B$}',
     ],
   }, {
@@ -238,7 +238,7 @@ class Demo extends Component {
     return (
       <div className="editor-cont">
         <h1 className="editor-demo-title">带公式编辑能力的富文本编辑器</h1>
-        <Editor latexSelected={this.state.latexSelected} />
+        <Editor latexSelected={this.state.latexSelected} value={editorValue} />
         <div>
           {
             demos.map((item) => {

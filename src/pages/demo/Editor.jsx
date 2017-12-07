@@ -21,7 +21,7 @@ class Editor extends Component {
       texModalOpen: false,
       latexSelectedFromContent: false,
       latexSelected: props.latexSelected || '',
-      text: '',
+      text: props.value || '', // 初始值
     };
     const toolbar = {
       container: [
