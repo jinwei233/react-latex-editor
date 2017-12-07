@@ -9,7 +9,7 @@ import './index.scss';
 
 
 const demos = [{
-  title: '数学',
+  title: '数学示例',
   key: uuid.next(),
   rows: [{
     key: uuid.next(),
@@ -123,7 +123,7 @@ p_{m1} & p_{m2} & \\ldots
     ],
   }],
 }, {
-  title: '化学',
+  title: '化学示例',
   key: uuid.next(),
   rows: [{
     key: uuid.next(),
